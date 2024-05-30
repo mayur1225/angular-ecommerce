@@ -1,8 +1,11 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component} from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { ProductListComponent } from './componets/product-list/components';
 import { HttpClientModule } from '@angular/common/http';
-import { ProductCategoryMenuComponent } from './product-category-menu/product-category-menu.component';
+import { ProductCategoryMenuComponent } from './componets/product-category-menu/product-category-menu.component';
+import { SearchComponent } from './componets/search/search.component';
+import { ProductDeatilsComponent } from './componets/product-deatils/product-deatils.component';
+import { NgbPaginationModule,NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -12,6 +15,10 @@ import { ProductCategoryMenuComponent } from './product-category-menu/product-ca
     RouterOutlet,
     RouterModule,
     ProductCategoryMenuComponent,
+    SearchComponent,
+    ProductDeatilsComponent,
+    NgbModule,
+    NgbPaginationModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
