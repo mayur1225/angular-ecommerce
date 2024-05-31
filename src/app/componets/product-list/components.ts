@@ -3,17 +3,23 @@ import { ProductService } from '../../services/product.service';
 import { Product } from '../../common/product';
 import { CommonModule, NgFor } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [NgFor, CommonModule,RouterLink],
+  imports: [NgFor, CommonModule,RouterLink,NgbPagination],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
-  currentCategoryId?: number;
+  currentCategoryId?: number=1;
+  previousCategoryId?: number=1;
   searchMode: boolean = false;
+  thePage: number = 1;
+  thePageSize: number = 10;
+  theTotalElements: number = 0;
+  previousKeyword: string ="";
 
   constructor(
     private productService: ProductService,
@@ -36,15 +42,29 @@ export class ProductListComponent implements OnInit {
     }
   }
 
+  updatePageSize(pageSize:string){
+    this.thePage = 1;
+    this.thePageSize = +pageSize;
+    this.ListProduct();
+  }
+
   handleSearchProduct(): void {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
-    this.productService.searchProducts(theKeyword).subscribe({
+    if(this.previousKeyword!= theKeyword){
+         this.thePage=1
+    }
+    this.previousKeyword = theKeyword;
+
+    this.productService.searchProductListPaginate(theKeyword,this.thePageSize,this.thePage-1).subscribe({
       next: (data) => {
-        this.products = data;
+        this.products = data._embedded.products;
+        this.thePage= data.page.number + 1;
+        this.thePageSize = data.page.size;
+        this.theTotalElements = data.page.totalElements
       },
       error: (error) => {
-        console.error('Error fetching products:', error);
+        console.error('Error fetching  search products:', error);
       }
     });
   }
@@ -54,9 +74,15 @@ export class ProductListComponent implements OnInit {
     this.currentCategoryId = categoryId !== null ? +categoryId : undefined;
 
     if (this.currentCategoryId !== undefined) {
-      this.productService.getProductList(this.currentCategoryId).subscribe({
+      this.thePage = 1;
+      this.previousCategoryId = this.currentCategoryId;
+      this.productService.getProductListPaginate(this.currentCategoryId,
+        this.thePageSize,this.thePage-1).subscribe({
         next: (data) => {
-          this.products = data;
+          this.products = data._embedded.products;
+          this.thePage= data.page.number + 1;
+          this.thePageSize = data.page.size;
+          this.theTotalElements = data.page.totalElements
         },
         error: (error) => {
           console.error('Error fetching categorywise products', error);

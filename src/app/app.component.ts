@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProductCategoryMenuComponent } from './componets/product-category-menu/product-category-menu.component';
 import { SearchComponent } from './componets/search/search.component';
 import { ProductDeatilsComponent } from './componets/product-deatils/product-deatils.component';
-import { NgbPaginationModule,NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule,NgbModule, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -18,7 +18,8 @@ import { NgbPaginationModule,NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SearchComponent,
     ProductDeatilsComponent,
     NgbModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    NgbPagination,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
