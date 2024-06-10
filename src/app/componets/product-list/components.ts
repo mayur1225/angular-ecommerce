@@ -4,6 +4,8 @@ import { Product } from '../../common/product';
 import { CommonModule, NgFor } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
+import { CartItem } from '../../common/cart-item';
+import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-product-list',
   standalone: true,
@@ -23,6 +25,7 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private cartServices: CartService,
     private route: ActivatedRoute
   ) {}
 
@@ -98,5 +101,17 @@ export class ProductListComponent implements OnInit {
         }
       });
     }
+  }
+
+  addToCart(theProduct:Product) {
+    const theCartItem = new CartItem(theProduct);
+    this.cartServices.addToCart(theCartItem);
+    this.cartServices.totalPrice.subscribe((data) => {
+
+      
+      
+
+    });
+    
   }
 }

@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Product } from '../../common/product';
 import { ProductService } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
+import { CartItem } from '../../common/cart-item';
 
 @Component({
   selector: 'app-product-deatils',
@@ -16,7 +18,8 @@ export class ProductDeatilsComponent implements OnInit {
   product!:Product;
 
   constructor(private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService
     ){}
 
   ngOnInit(): void {
@@ -41,4 +44,10 @@ export class ProductDeatilsComponent implements OnInit {
       console.error('Product ID is not available in the route');
     }
   }
+  
+  addToCart(){
+    const cartItem = new CartItem(this.product)
+    this.cartService.addToCart(cartItem);
+
+  }  
 }

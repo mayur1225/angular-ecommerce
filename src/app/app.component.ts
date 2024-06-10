@@ -6,6 +6,7 @@ import { ProductCategoryMenuComponent } from './componets/product-category-menu/
 import { SearchComponent } from './componets/search/search.component';
 import { ProductDeatilsComponent } from './componets/product-deatils/product-deatils.component';
 import { NgbPaginationModule,NgbModule, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
+import { CartStatusComponent } from './componets/cart-status/cart-status.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -20,6 +21,7 @@ import { NgbPaginationModule,NgbModule, NgbPagination } from '@ng-bootstrap/ng-b
     NgbModule,
     NgbPaginationModule,
     NgbPagination,
+    CartStatusComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
